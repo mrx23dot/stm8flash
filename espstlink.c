@@ -24,11 +24,11 @@
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <termios.h>
 #include <unistd.h>
 #include "libespstlink.h"
 #include "pgm.h"
 #include "try.h"
+#include <stdlib.h>
 
 #define DM_CSR2 0x7F99
 
@@ -100,7 +100,7 @@ int espstlink_swim_read_range(programmer_t *pgm, const stm8_device_t *device,
                               unsigned int length) {
   size_t i = 0;
   for (; i < length;) {
-    int current_size = MIN(length - i, 255);
+    int current_size = min(length - i, 255);
     if (!espstlink_swim_read(pgm->espstlink, buffer + i, start + i,
                              current_size))
       return i;
@@ -117,7 +117,7 @@ int espstlink_swim_write_range(programmer_t *pgm, const stm8_device_t *device,
   size_t i = 0;
   for (; i < length;) {
     // Write one block (128 bytes) at a time.
-    int current_size = MIN(length - i, 128);
+    int current_size = min(length - i, 128);
     if (!espstlink_swim_write(pgm->espstlink, buffer + i, start + i,
                               current_size))
       return i;

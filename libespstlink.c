@@ -27,7 +27,6 @@
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <termios.h>
 #include <unistd.h>
 
 static espstlink_error_t error = {0, NULL};

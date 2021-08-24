@@ -22,25 +22,10 @@ endif
 
 BASE_CFLAGS += --std=gnu99 --pedantic -Wall
 
-ifeq ($(PLATFORM),Linux)
-	LIBS = `pkg-config --libs libusb-1.0`
-	LIBUSB_CFLAGS = `pkg-config --cflags libusb-1.0`
-else ifeq ($(PLATFORM),Darwin)
-	LIBS = $(shell pkg-config --libs libusb-1.0)
-	LIBUSB_CFLAGS = $(shell pkg-config --cflags libusb-1.0)
-	#MacOSSDK=$(shell xcrun --show-sdk-path)
-	#BASE_CFLAGS += -I$(MacOSSDK)/usr/include/ -I$(MacOSSDK)/usr/include/sys -I$(MacOSSDK)/usr/include/machine
-else ifeq ($(PLATFORM),FreeBSD)
-	LIBS = `pkg-config --libs libusb-1.0`
-	LIBUSB_CFLAGS = `pkg-config --cflags libusb-1.0`
-else
-# 	Generic case is Windows
-
-	LIBS   = -lusb-1.0
-	LIBUSB_CFLAGS =
-	CC	   ?= GCC
-	BIN_SUFFIX =.exe
-endif
+LIBS   = -lusb-1.0
+LIBUSB_CFLAGS =
+CC	   = GCC
+BIN_SUFFIX =.exe
 
 # Respect user-supplied cflags, if any - just put ours in front.
 override CFLAGS := $(BASE_CFLAGS) $(LIBUSB_CFLAGS) $(CFLAGS)
